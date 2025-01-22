@@ -15,27 +15,30 @@ public class Main {
         Integer[] testArray3 = {10};
 
 
+        findClosestPair(array1, 50);
+        findClosestPair(array2, 23);
+        findClosestPair(array3, 23);
+        findClosestPair(array4, 23);
+        findClosestPair(array5, 23);
 
-
-        findClosestPair(array1,50);
-        findClosestPair(array2,23);
-        findClosestPair(array3,23);
-        findClosestPair(array4,23);
-        findClosestPair(array5,23);
-
-        findClosestPair(testArray1,25);
-        findClosestPair(testArray2,10);
-        findClosestPair(testArray3,10);
+        findClosestPair(testArray1, 25);
+        findClosestPair(testArray2, 10);
+        findClosestPair(testArray3, 10);
     }
 
     private static void findClosestPair(Integer[] array, int target) {
         HashMap<Integer, List<Pair>> pairMap = new HashMap<>();
-        List<Integer> list = Arrays.stream(array).sorted().toList();
+        List<Integer> list = Arrays.stream(array)
+                .sorted()
+                .toList();
+
         createPairs(target, list, pairMap);
+
         if (pairMap.isEmpty()) {
             System.out.println("There is no pair!");
             return;
         }
+
         Integer shortestDistance = Collections.min(pairMap.keySet());
         System.out.println("Shortest Distance: " + shortestDistance);
         Pair output = findLargestDifference(pairMap.get(shortestDistance));
@@ -45,8 +48,9 @@ public class Main {
 
     private static Pair findLargestDifference(List<Pair> pairs) {
         //System.out.println(pairs);
-        return pairs.stream().max(Comparator.comparingInt(Pair::getDifference)).get();
-
+        return pairs.stream()
+                .max(Comparator.comparingInt(Pair::getDifference))
+                .get();
     }
 
     private static void createPairs(int target, List<Integer> list, HashMap<Integer, List<Pair>> pairMap) {
