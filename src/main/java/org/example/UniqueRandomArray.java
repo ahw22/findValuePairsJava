@@ -9,7 +9,7 @@ public class UniqueRandomArray {
     public static int[] fillUniqueRandomArray() {
         int size = 10000;
         Set<Integer> uniqueNumbers = new HashSet<>();
-        Random random = new Random();
+        Random random = new Random(123);
 
         while (uniqueNumbers.size() < size) {
             int randomValue = random.nextInt(size * 10);

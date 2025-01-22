@@ -13,8 +13,8 @@ public class Main {
         Integer[] testArray1 = {10, 30, 20, 5};
         Integer[] testArray2 = {5, 2, 7, 1, 4};
         Integer[] testArray3 = {10};
-
-
+j       */
+        /*
         findClosestPair(array1, 50);
         findClosestPair(array2, 23);
         findClosestPair(array3, 23);
@@ -24,11 +24,12 @@ public class Main {
         findClosestPair(testArray1, 25);
         findClosestPair(testArray2, 10);
         findClosestPair(testArray3, 10);
+
          */
         int[] array =  UniqueRandomArray.fillUniqueRandomArray();
         Integer[] targetArray = Arrays.stream(array).boxed().toArray(Integer[]::new);
         long startTime = System.nanoTime();
-        findClosestPair(targetArray, 50);
+        findClosestPair(targetArray, 50000);
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime-startTime) / 1000000 + "ms");
 
@@ -65,7 +66,7 @@ public class Main {
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
         for (int i = 0; i < list.size(); i++) {
-            if (i > target) //todo: This might miss solutions, needs testing
+            if (i > target && !pairMap.isEmpty()) //todo: This might miss solutions, needs testing
                 break;
             for (int j = i + 1; j < list.size(); j++) {
                 int distance = Math.abs(list.get(i) + list.get(j) - target);
