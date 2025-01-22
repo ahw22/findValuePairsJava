@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-
+        /*
         Integer[] array1 = {23, 14, 16, 5, 31, 1, 49, 17, 6, 3, 7, 29, 10, 44, 8, 21, 25, 15, 33, 34};
         Integer[] array2 = {14, 42, 34, 11, 19, 39, 21, 50, 29, 7, 48, 17, 16, 35, 38, 4, 40, 10, 31, 8};
         Integer[] array3 = {46, 45, 30, 23, 35, 43, 37, 15, 28, 32, 10, 24, 1, 19, 25, 49, 6, 9, 40, 18};
@@ -24,6 +24,14 @@ public class Main {
         findClosestPair(testArray1, 25);
         findClosestPair(testArray2, 10);
         findClosestPair(testArray3, 10);
+         */
+        int[] array =  UniqueRandomArray.fillUniqueRandomArray();
+        Integer[] targetArray = Arrays.stream(array).boxed().toArray(Integer[]::new);
+        long startTime = System.nanoTime();
+        findClosestPair(targetArray, 50);
+        long stopTime = System.nanoTime();
+        System.out.println("Runtime: " + (float) (stopTime-startTime) / 1000000 + "ms");
+
     }
 
     private static void findClosestPair(Integer[] array, int target) {
@@ -57,6 +65,8 @@ public class Main {
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
         for (int i = 0; i < list.size(); i++) {
+            if (i > target) //todo: This might miss solutions, needs testing
+                break;
             for (int j = i + 1; j < list.size(); j++) {
                 int distance = Math.abs(list.get(i) + list.get(j) - target);
                 int difference = Math.abs(list.get(i) - list.get(j));
