@@ -47,7 +47,7 @@ public class Main {
     }
 
     private static Pair findLargestDifference(List<Pair> pairs) {
-        //System.out.println(pairs);
+        System.out.println(pairs);
         return pairs.stream()
                 .max(Comparator.comparingInt(Pair::getDifference))
                 .get();
@@ -56,12 +56,12 @@ public class Main {
     private static void createPairs(int target, List<Integer> list, HashMap<Integer, List<Pair>> pairMap) {
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
-        for (int num : list) {
-            for (int num2 : list) {
-                if (num == num2) continue;
-                int distance = Math.abs(num + num2 - target);
-                int difference = Math.abs(num - num2);
-                Pair pair = new Pair(new Integer[]{num, num2}, distance, difference);
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i).equals(list.get(j))) continue;
+                int distance = Math.abs(list.get(i) + list.get(j) - target);
+                int difference = Math.abs(list.get(i) - list.get(j));
+                Pair pair = new Pair(new Integer[]{list.get(i), list.get(j)}, distance, difference);
                 addPairToMap(pairMap, distance, pair);
             }
         }
