@@ -65,7 +65,23 @@ j       */
     private static void createPairs(int target, List<Integer> list, HashMap<Integer, List<Pair>> pairMap) {
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
-        list.getFirst(Comparator.comparing(o -> o > target));
+        int indexClosestToTarget = findValueClosestToTarget(list, target);
+        System.out.println(indexClosestToTarget);
+    }
+
+    private static int findValueClosestToTarget(List<Integer> list, int target) {
+        Integer halfwayPoint = list.size()/2;
+        List<Integer> list1 = list.subList(0, halfwayPoint);
+        List<Integer> list2 = list.subList(halfwayPoint, list.size());
+        Integer diff1 = Math.abs(list1.getLast() - target);
+        Integer diff2 = Math.abs(list1.getFirst() - target);
+        if (diff1 == 0)
+            return list1.getLast();
+        if (diff2 == 0)
+            return list2.getFirst();
+        if (diff1 < diff2) {
+            findValueClosestToTarget(list1, target);
+        } else findValueClosestToTarget(list2, target);
     }
 
     private static void addPairToMap(HashMap<Integer, List<Pair>> pairMap, int distance, Pair pair) {
