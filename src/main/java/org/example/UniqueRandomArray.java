@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class UniqueRandomArray {
     public static int[] fillUniqueRandomArray() {
-        int size = 10000;
+        int size = 100000;
         Set<Integer> uniqueNumbers = new HashSet<>();
         Random random = new Random(123);
 

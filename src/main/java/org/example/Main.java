@@ -12,29 +12,21 @@ public class Main {
         int[] testArray1 = {10, 30, 20, 5};
         int[] testArray2 = {5, 2, 7, 1, 4};
         int[] testArray3 = {10};
+
+        int[] array = UniqueRandomArray.fillUniqueRandomArray();
+        long startTime = System.nanoTime();
+        findClosestPair(array, 90000);
         /*
         findClosestPair(array1, 50);
         findClosestPair(array2, 23);
         findClosestPair(array3, 23);
         findClosestPair(array4, 23);
         findClosestPair(array5, 23);
-
         findClosestPair(testArray1, 25);
         findClosestPair(testArray2, 10);
         findClosestPair(testArray3, 10);
 
          */
-        int[] array = UniqueRandomArray.fillUniqueRandomArray();
-        long startTime = System.nanoTime();
-        //findClosestPair(array, 50000);
-        findClosestPair(array1, 50);
-        findClosestPair(array2, 23);
-        findClosestPair(array3, 23);
-        findClosestPair(array4, 23);
-        findClosestPair(array5, 23);
-        findClosestPair(testArray1, 25);
-        findClosestPair(testArray2, 10);
-        findClosestPair(testArray3, 10);
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
 
@@ -53,7 +45,6 @@ public class Main {
 
         int shortestDistance = Collections.min(pairMap.keySet());
         System.out.println("Shortest Distance: " + shortestDistance);
-        System.out.println(pairMap);
         int[] output = findLargestDifference(pairMap, shortestDistance);
         System.out.println("The solution is: " + Arrays.toString(output));
         System.out.println("Difference is: " + Math.abs(output[0] - output[1]));
@@ -80,7 +71,7 @@ public class Main {
         System.out.println("Calculating Pairs for array: " + Arrays.toString(array));
         System.out.println("Target is : " + target);
         int indexClosestToTarget = findValueClosestToTarget(array, target);
-        System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + array[indexClosestToTarget]);
+        //System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + array[indexClosestToTarget]);
         createPairsFromIndex(indexClosestToTarget, array, target, pairMap);
     }
 
@@ -135,11 +126,11 @@ public class Main {
             return halfwayPoint;
         }
         if (diff1 == 0) {
-            System.out.println("Diff1 = 0");
+            //System.out.println("Diff1 = 0");
             return part1.length - 1;
         }
         if (diff2 == 0) {
-            System.out.println("Diff2 = 0");
+            //System.out.println("Diff2 = 0");
             return halfwayPoint;
         }
         if (diff1 < diff2) {
