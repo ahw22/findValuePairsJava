@@ -65,16 +65,7 @@ j       */
     private static void createPairs(int target, List<Integer> list, HashMap<Integer, List<Pair>> pairMap) {
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
-        for (int i = 0; i < list.size(); i++) {
-            if (i > target && !pairMap.isEmpty()) //todo: This might miss solutions, needs testing
-                break;
-            for (int j = i + 1; j < list.size(); j++) {
-                int distance = Math.abs(list.get(i) + list.get(j) - target);
-                int difference = Math.abs(list.get(i) - list.get(j));
-                Pair pair = new Pair(new Integer[]{list.get(i), list.get(j)}, distance, difference);
-                addPairToMap(pairMap, distance, pair);
-            }
-        }
+        list.getFirst(Comparator.comparing(o -> o > target));
     }
 
     private static void addPairToMap(HashMap<Integer, List<Pair>> pairMap, int distance, Pair pair) {
