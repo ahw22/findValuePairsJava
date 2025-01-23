@@ -27,13 +27,13 @@ public class Main {
         int[] array = UniqueRandomArray.fillUniqueRandomArray();
         long startTime = System.nanoTime();
         findClosestPair(array, 50000);
-        findClosestPair(array1, 30);
-        findClosestPair(array2, 30);
-        findClosestPair(array3, 30);
-        findClosestPair(array4, 30);
-        findClosestPair(array5, 30);
+        findClosestPair(array1, 50);
+        findClosestPair(array2, 23);
+        findClosestPair(array3, 23);
+        findClosestPair(array4, 23);
+        findClosestPair(array5, 23);
         findClosestPair(testArray1, 25);
-        findClosestPair(testArray2, 9);
+        findClosestPair(testArray2, 10);
         findClosestPair(testArray3, 10);
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
@@ -68,6 +68,8 @@ public class Main {
     }
 
     private static void createPairsFromIndex(int indexClosestToTarget, int[] array, int target, HashMap<Integer, int[]> pairMap) {
+        if (indexClosestToTarget < array.length-1)
+            indexClosestToTarget++;
         for (int i = indexClosestToTarget; i > 0; i--) {
             for (int j = 0; j < array.length; j++) {
                 int distance = Math.abs(target - array[i] - array[j]);
@@ -75,14 +77,16 @@ public class Main {
                     //System.out.println("Found pair with 0 distance");
                     pairMap.put(distance, new int[] {array[j], array[i]});
                     return;
-                }
-                if (array[i] + array[j] > array[indexClosestToTarget]) {
+                } else if (array[i] + array[j] > array[indexClosestToTarget]) {
                     //System.out.println("Pair larger than target");
                     break;
+                } else {
+                    pairMap.put(distance, new int[] {array[j], array[i]});
                 }
 
             }
         }
+
     }
 
     private static int findValueClosestToTarget(int[] array, int target) {
