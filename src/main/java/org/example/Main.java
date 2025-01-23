@@ -107,10 +107,12 @@ public class Main {
     }
 
     private static void addToMap(HashMap<Integer, List<int[]>> pairMap, int distance, int[] ints) {
+        if (ints[0] == ints[1]) return;
         List<int[]> tempList = pairMap.get(distance);
         if (tempList == null)
             tempList = new ArrayList<>();
         tempList.add(ints);
+        pairMap.put(distance, tempList);
     }
 
 
