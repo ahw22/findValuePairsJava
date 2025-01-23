@@ -26,7 +26,7 @@ public class Main {
          */
         int[] array = UniqueRandomArray.fillUniqueRandomArray();
         long startTime = System.nanoTime();
-        findClosestPair(array, 50000);
+        //findClosestPair(array, 50000);
         findClosestPair(array1, 50);
         findClosestPair(array2, 23);
         findClosestPair(array3, 23);
@@ -41,7 +41,7 @@ public class Main {
     }
 
     private static void findClosestPair(int[] array, int target) {
-        HashMap<Integer, int[]> pairMap = new HashMap<>();
+        HashMap<Integer, List<int[]>> pairMap = new HashMap<>();
         array = Arrays.stream(array).sorted().toArray();
         createPairs(target, array, pairMap);
 
@@ -53,13 +53,30 @@ public class Main {
 
         int shortestDistance = Collections.min(pairMap.keySet());
         System.out.println("Shortest Distance: " + shortestDistance);
-        int[] output = pairMap.get(shortestDistance);
+        System.out.println(pairMap);
+        int[] output = findLargestDifference(pairMap, shortestDistance);
         System.out.println("The solution is: " + Arrays.toString(output));
         System.out.println("Difference is: " + Math.abs(output[0] - output[1]));
         System.out.println("-".repeat(80));
     }
 
-    private static void createPairs(int target, int[] array, HashMap<Integer, int[]> pairMap) {
+    private static int[] findLargestDifference(HashMap<Integer, List<int[]>> pairMap, int shortestDistance) {
+        List<int[]> tempList = pairMap.get(shortestDistance);
+        int indexOfMaxDifference = Integer.MIN_VALUE;
+        int maxDifference = Integer.MIN_VALUE;
+        for (int i = 0; i < tempList.size(); i++) {
+            int[] tempArr = tempList.get(i);
+            int difference = Math.abs(tempArr[0] - tempArr[1]);
+            if (difference > maxDifference) {
+                maxDifference = difference;
+                indexOfMaxDifference = i;
+
+            }
+        }
+        return tempList.get(indexOfMaxDifference);
+    }
+
+    private static void createPairs(int target, int[] array, HashMap<Integer, List<int[]>> pairMap) {
         System.out.println("Calculating Pairs for array: " + Arrays.toString(array));
         System.out.println("Target is : " + target);
         int indexClosestToTarget = findValueClosestToTarget(array, target);
@@ -67,27 +84,35 @@ public class Main {
         createPairsFromIndex(indexClosestToTarget, array, target, pairMap);
     }
 
-    private static void createPairsFromIndex(int indexClosestToTarget, int[] array, int target, HashMap<Integer, int[]> pairMap) {
+    private static void createPairsFromIndex(int indexClosestToTarget, int[] array, int target, HashMap<Integer, List<int[]>> pairMap) {
         if (indexClosestToTarget < array.length-1)
             indexClosestToTarget++;
         for (int i = indexClosestToTarget; i > 0; i--) {
             for (int j = 0; j < array.length; j++) {
-                int distance = Math.abs(target - array[i] - array[j]);
+                if (array[i] == array[j])
+                    continue;
+                int distance = Math.abs(target - (array[i] + array[j]));
                 if (array[i] + array[j] == target) {
                     //System.out.println("Found pair with 0 distance");
-                    pairMap.put(distance, new int[] {array[j], array[i]});
+                    addToMap(pairMap, distance, new int[] {array[j], array[i]});
                     return;
-                } else if (array[i] + array[j] > array[indexClosestToTarget]) {
-                    //System.out.println("Pair larger than target");
-                    break;
-                } else {
-                    pairMap.put(distance, new int[] {array[j], array[i]});
+                }  else {
+                    addToMap(pairMap, distance, new int[] {array[j], array[i]});
                 }
 
             }
         }
+        addToMap(pairMap, Math.abs(target - (array[indexClosestToTarget] + array[0])), new int[] {array[indexClosestToTarget], array[0]});
 
     }
+
+    private static void addToMap(HashMap<Integer, List<int[]>> pairMap, int distance, int[] ints) {
+        List<int[]> tempList = pairMap.get(distance);
+        if (tempList == null)
+            tempList = new ArrayList<>();
+        tempList.add(ints);
+    }
+
 
     private static int findValueClosestToTarget(int[] array, int target) {
         if (array.length == 1)
