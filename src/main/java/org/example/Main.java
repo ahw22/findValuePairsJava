@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        /*
         Integer[] array1 = {23, 14, 16, 5, 31, 1, 49, 17, 6, 3, 7, 29, 10, 44, 8, 21, 25, 15, 33, 34};
         Integer[] array2 = {14, 42, 34, 11, 19, 39, 21, 50, 29, 7, 48, 17, 16, 35, 38, 4, 40, 10, 31, 8};
+        /*
         Integer[] array3 = {46, 45, 30, 23, 35, 43, 37, 15, 28, 32, 10, 24, 1, 19, 25, 49, 6, 9, 40, 18};
         Integer[] array4 = {36, 8, 16, 27, 37, 26, 30, 43, 48, 50, 35, 49, 32, 31, 20, 38, 23, 13, 5, 42};
         Integer[] array5 = {15, 28, 47, 12, 3, 45, 24, 44, 23, 6, 20, 16, 30, 40, 42, 17, 10, 25, 32, 36};
@@ -26,12 +26,14 @@ j       */
         findClosestPair(testArray3, 10);
 
          */
-        int[] array =  UniqueRandomArray.fillUniqueRandomArray();
+        int[] array = UniqueRandomArray.fillUniqueRandomArray();
         Integer[] targetArray = Arrays.stream(array).boxed().toArray(Integer[]::new);
         long startTime = System.nanoTime();
         findClosestPair(targetArray, 50000);
+        findClosestPair(array1, 30);
+        findClosestPair(array2, 30);
         long stopTime = System.nanoTime();
-        System.out.println("Runtime: " + (float) (stopTime-startTime) / 1000000 + "ms");
+        System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
 
     }
 
@@ -66,22 +68,35 @@ j       */
         System.out.println("Calculating Pairs for List: " + list);
         System.out.println("Target is : " + target);
         int indexClosestToTarget = findValueClosestToTarget(list, target);
-        System.out.println(indexClosestToTarget);
+        System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + list.get(indexClosestToTarget));
     }
 
     private static int findValueClosestToTarget(List<Integer> list, int target) {
-        Integer halfwayPoint = list.size()/2;
+        if (list.size() == 1)
+            return 0;
+        int halfwayPoint = (list.size() / 2);
         List<Integer> list1 = list.subList(0, halfwayPoint);
         List<Integer> list2 = list.subList(halfwayPoint, list.size());
-        Integer diff1 = Math.abs(list1.getLast() - target);
-        Integer diff2 = Math.abs(list1.getFirst() - target);
-        if (diff1 == 0)
-            return list1.getLast();
-        if (diff2 == 0)
-            return list2.getFirst();
+        int diff1 = Math.abs(list1.getLast() - target);
+        int diff2 = Math.abs(list2.getFirst() - target);
+        if (diff1 == diff2) {
+            return halfwayPoint;
+        }
+        if (diff1 == 0) {
+            System.out.println("Diff1 = 0");
+            return list1.size() - 1;
+        }
+        if (diff2 == 0) {
+            System.out.println("Diff2 = 0");
+            return halfwayPoint;
+        }
         if (diff1 < diff2) {
-            findValueClosestToTarget(list1, target);
-        } else findValueClosestToTarget(list2, target);
+            int index = findValueClosestToTarget(list1, target);
+            return index;
+        } else {
+            int index = findValueClosestToTarget(list2, target);
+            return halfwayPoint + index;
+        }
     }
 
     private static void addPairToMap(HashMap<Integer, List<Pair>> pairMap, int distance, Pair pair) {
