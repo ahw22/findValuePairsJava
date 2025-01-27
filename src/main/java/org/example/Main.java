@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+
         int[] array1 = {23, 14, 16, 5, 31, 1, 49, 17, 6, 3, 7, 29, 10, 44, 8, 21, 25, 15, 33, 34};
         int[] array2 = {14, 42, 34, 11, 19, 39, 21, 50, 29, 7, 48, 17, 16, 35, 38, 4, 40, 10, 31, 8};
         int[] array3 = {46, 45, 30, 23, 35, 43, 37, 15, 28, 32, 10, 24, 1, 19, 25, 49, 6, 9, 40, 18};
@@ -13,40 +14,59 @@ public class Main {
         int[] testArray2 = {5, 2, 7, 1, 4};
         int[] testArray3 = {10};
 
-        int[] array = UniqueRandomArray.fillUniqueRandomArray();
+        int[] array = UniqueRandomArray.fillUniqueRandomArray(123);
         long startTime = System.nanoTime();
-        findClosestPair(array, 90000);
-//        findClosestPair(array1, 50);
-//        findClosestPair(array2, 23);
-//        findClosestPair(array3, 23);
-//        findClosestPair(array4, 23);
-//        findClosestPair(array5, 23);
-//        findClosestPair(testArray1, 25);
-//        findClosestPair(testArray2, 10);
-//        findClosestPair(testArray3, 10);
+        int[] result = findClosestPair(array, 900000);
+
+        printResult(result);
+
+        result = findClosestPair(array1, 50);
+        printResult(result);
+        result = findClosestPair(array2, 23);
+        printResult(result);
+        result = findClosestPair(array3, 23);
+        printResult(result);
+        result = findClosestPair(array4, 23);
+        printResult(result);
+        result = findClosestPair(array5, 23);
+        printResult(result);
+        result = findClosestPair(testArray1, 25);
+        printResult(result);
+        result = findClosestPair(testArray2, 10);
+        printResult(result);
+        result = findClosestPair(testArray3, 10);
+        printResult(result);
 
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
 
     }
 
-    private static void findClosestPair(int[] array, int target) {
+    private static void printResult(int[] result) {
+        if (result == null) {
+            System.out.println("There is no pair!");
+            System.out.println("-".repeat(80));
+        }
+
+        System.out.println("The solution is: " + Arrays.toString(result));
+        System.out.println("Difference is: " + Math.abs(result[0] - result[1]));
+        System.out.println("-".repeat(80));
+    }
+
+    public static int[] findClosestPair(int[] array, int target) {
         HashMap<Integer, List<int[]>> pairMap = new HashMap<>();
         array = Arrays.stream(array).sorted().toArray();
         createPairs(target, array, pairMap);
 
         if (pairMap.isEmpty()) {
-            System.out.println("There is no pair!");
-            System.out.println("-".repeat(80));
-            return;
+
+            return null;
         }
 
         int shortestDistance = Collections.min(pairMap.keySet());
         System.out.println("Shortest Distance: " + shortestDistance);
-        int[] output = findLargestDifference(pairMap, shortestDistance);
-        System.out.println("The solution is: " + Arrays.toString(output));
-        System.out.println("Difference is: " + Math.abs(output[0] - output[1]));
-        System.out.println("-".repeat(80));
+        return findLargestDifference(pairMap, shortestDistance);
+
     }
 
     private static int[] findLargestDifference(HashMap<Integer, List<int[]>> pairMap, int shortestDistance) {
@@ -66,7 +86,7 @@ public class Main {
     }
 
     private static void createPairs(int target, int[] array, HashMap<Integer, List<int[]>> pairMap) {
-        System.out.println("Calculating Pairs for array: " + Arrays.toString(array));
+//        System.out.println("Calculating Pairs for array: " + Arrays.toString(array));
         System.out.println("Target is : " + target);
         int indexClosestToTarget = findValueClosestToTarget(array, target, 0, array.length-1);
         System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + array[indexClosestToTarget]);
