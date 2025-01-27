@@ -5,37 +5,12 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        int[] array1 = {23, 14, 16, 5, 31, 1, 49, 17, 6, 3, 7, 29, 10, 44, 8, 21, 25, 15, 33, 34};
-        int[] array2 = {14, 42, 34, 11, 19, 39, 21, 50, 29, 7, 48, 17, 16, 35, 38, 4, 40, 10, 31, 8};
-        int[] array3 = {46, 45, 30, 23, 35, 43, 37, 15, 28, 32, 10, 24, 1, 19, 25, 49, 6, 9, 40, 18};
-        int[] array4 = {36, 8, 16, 27, 37, 26, 30, 43, 48, 50, 35, 49, 32, 31, 20, 38, 23, 13, 5, 42};
-        int[] array5 = {15, 28, 47, 12, 3, 45, 24, 44, 23, 6, 20, 16, 30, 40, 42, 17, 10, 25, 32, 36};
-        int[] testArray1 = {10, 30, 20, 5};
-        int[] testArray2 = {5, 2, 7, 1, 4};
-        int[] testArray3 = {10};
-
         int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 100000);
         long startTime = System.nanoTime();
         int[] result = findClosestPair(array, 900000);
 
         printResult(result);
 
-        result = findClosestPair(array1, 50);
-        printResult(result);
-        result = findClosestPair(array2, 23);
-        printResult(result);
-        result = findClosestPair(array3, 23);
-        printResult(result);
-        result = findClosestPair(array4, 23);
-        printResult(result);
-        result = findClosestPair(array5, 23);
-        printResult(result);
-        result = findClosestPair(testArray1, 25);
-        printResult(result);
-        result = findClosestPair(testArray2, 10);
-        printResult(result);
-        result = findClosestPair(testArray3, 10);
-        printResult(result);
 
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
