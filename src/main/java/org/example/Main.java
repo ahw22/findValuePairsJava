@@ -16,17 +16,15 @@ public class Main {
         int[] array = UniqueRandomArray.fillUniqueRandomArray();
         long startTime = System.nanoTime();
         findClosestPair(array, 90000);
-        /*
-        findClosestPair(array1, 50);
-        findClosestPair(array2, 23);
-        findClosestPair(array3, 23);
-        findClosestPair(array4, 23);
-        findClosestPair(array5, 23);
-        findClosestPair(testArray1, 25);
-        findClosestPair(testArray2, 10);
-        findClosestPair(testArray3, 10);
+//        findClosestPair(array1, 50);
+//        findClosestPair(array2, 23);
+//        findClosestPair(array3, 23);
+//        findClosestPair(array4, 23);
+//        findClosestPair(array5, 23);
+//        findClosestPair(testArray1, 25);
+//        findClosestPair(testArray2, 10);
+//        findClosestPair(testArray3, 10);
 
-         */
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
 
@@ -70,8 +68,8 @@ public class Main {
     private static void createPairs(int target, int[] array, HashMap<Integer, List<int[]>> pairMap) {
         System.out.println("Calculating Pairs for array: " + Arrays.toString(array));
         System.out.println("Target is : " + target);
-        int indexClosestToTarget = findValueClosestToTarget(array, target);
-        //System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + array[indexClosestToTarget]);
+        int indexClosestToTarget = findValueClosestToTarget(array, target, 0, array.length-1);
+        System.out.println("Index closest to target: " + indexClosestToTarget + " , value of: " + array[indexClosestToTarget]);
         createPairsFromIndex(indexClosestToTarget, array, target, pairMap);
     }
 
@@ -107,38 +105,50 @@ public class Main {
     }
 
 
-    private static int findValueClosestToTarget(int[] array, int target) {
-        if (array.length == 1)
-            return 0;
-        int halfwayPoint = (array.length / 2);
-        int[] part1 = new int[halfwayPoint];
-        int[] part2 = new int[halfwayPoint];
-        System.arraycopy(array, 0, part1, 0, halfwayPoint);
-        System.arraycopy(array, halfwayPoint, part2, 0, halfwayPoint);
-        /*
-        System.out.println(Arrays.toString(part1));
-        System.out.println(Arrays.toString(part2));
-        System.out.println("-".repeat(50));
-        */
-        int diff1 = Math.abs(part1[part1.length-1] - target);
-        int diff2 = Math.abs(part2[0] - target);
+    private static int findValueClosestToTarget(int[] array, int target, int start, int end) {
+        int halfwayPoint = start + ((end - start) / 2);
+
+//        System.out.println("Start: " + start);
+//        System.out.println("Halfwaypoint: " + halfwayPoint);
+//        System.out.println("End: " + end);
+
+        if (start == halfwayPoint) {
+//            System.out.println("Returning end: " + end);
+            return end;
+        }
+
+        if (halfwayPoint == array.length) {
+//            System.out.println("Returning halfwaypoint" + halfwayPoint);
+            return halfwayPoint;
+        }
+
+
+//        int[] part1 = Arrays.copyOfRange(array, start, halfwayPoint);
+//        int[] part2 = Arrays.copyOfRange(array, halfwayPoint, end+ 1);
+//
+//        System.out.println(Arrays.toString(part1));
+//        System.out.println(Arrays.toString(part2));
+//        System.out.println("-".repeat(50));
+
+        int diff1 = Math.abs(array[halfwayPoint] - target);
+        int diff2 = Math.abs(array[halfwayPoint+ 1] - target);
         if (diff1 == diff2) {
             return halfwayPoint;
         }
         if (diff1 == 0) {
             //System.out.println("Diff1 = 0");
-            return part1.length - 1;
+            return halfwayPoint;
         }
         if (diff2 == 0) {
             //System.out.println("Diff2 = 0");
-            return halfwayPoint;
+            return halfwayPoint + 1;
         }
         if (diff1 < diff2) {
-            int index = findValueClosestToTarget(part1, target);
+            int index = findValueClosestToTarget(array, target, start, halfwayPoint);
             return index;
         } else {
-            int index = findValueClosestToTarget(part2, target);
-            return halfwayPoint + index;
+            int index = findValueClosestToTarget(array, target, halfwayPoint, end);
+            return index;
         }
     }
 
