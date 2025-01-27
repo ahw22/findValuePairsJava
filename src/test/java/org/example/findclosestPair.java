@@ -75,4 +75,27 @@ class findclosestPair {
         assertEquals(null, result);
     }
 
+    @Test
+    void testFindClosestPair_10kSeed123() {
+        int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 10000);
+        int[] result = Main.findClosestPair(array, 8550);
+
+        assertEquals(Arrays.toString(new int[]{40,8510}), Arrays.toString(result));
+    }
+
+    @Test
+    void testFindClosestPair_100kSeed123_large() {
+        int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 100000);
+        int[] result = Main.findClosestPair(array, 75650);
+
+        assertEquals(Arrays.toString(new int[]{217,75433}), Arrays.toString(result));
+    }
+
+    @Test
+    void testFindClosestPair_100kSeed123_small() {
+        int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 100000);
+        int[] result = Main.findClosestPair(array, 56);
+
+        assertEquals(Arrays.toString(new int[]{1,56}), Arrays.toString(result));
+    }
 }

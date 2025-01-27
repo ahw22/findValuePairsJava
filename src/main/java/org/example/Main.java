@@ -14,7 +14,7 @@ public class Main {
         int[] testArray2 = {5, 2, 7, 1, 4};
         int[] testArray3 = {10};
 
-        int[] array = UniqueRandomArray.fillUniqueRandomArray(123);
+        int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 100000);
         long startTime = System.nanoTime();
         int[] result = findClosestPair(array, 900000);
 

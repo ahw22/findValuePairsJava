@@ -6,8 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class UniqueRandomArray {
-    public static int[] fillUniqueRandomArray(int seed) {
-        int size = 100000;
+    public static int[] fillUniqueRandomArray(int seed, int size) {
         Set<Integer> uniqueNumbers = new HashSet<>();
         Random random = new Random(seed);
 
@@ -26,7 +25,7 @@ public class UniqueRandomArray {
     }
 
     public static void main(String[] args) {
-        int[] uniqueArray = fillUniqueRandomArray(123);
+        int[] uniqueArray = fillUniqueRandomArray(123,10000);
         for (int num : uniqueArray) {
             System.out.println(num);
         }
