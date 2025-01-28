@@ -6,11 +6,12 @@ public class Main {
     public static void main(String[] args) {
 
         int[] array = UniqueRandomArray.fillUniqueRandomArray(123, 100000);
+        int[] tmpArray = ReadArrayFromFile.readFile();
         long startTime = System.nanoTime();
-        int[] result = findClosestPair(array, 900000);
+//        int[] result = findClosestPair(array, 50000);
+        int[] result = findClosestPair(tmpArray, 50);
 
         printResult(result);
-
 
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
@@ -69,7 +70,7 @@ public class Main {
     }
 
     private static void createPairsFromIndex(int indexClosestToTarget, int[] array, int target, HashMap<Integer, List<int[]>> pairMap) {
-        if (indexClosestToTarget < array.length-1)
+        if (indexNotEndOfArray(indexClosestToTarget, array))
             indexClosestToTarget++;
         for (int i = indexClosestToTarget; i > 0; i--) {
             for (int j = 0; j < array.length; j++) {
@@ -88,6 +89,10 @@ public class Main {
         }
         addToMap(pairMap, Math.abs(target - (array[indexClosestToTarget] + array[0])), new int[] {array[indexClosestToTarget], array[0]});
 
+    }
+
+    private static boolean indexNotEndOfArray(int indexClosestToTarget, int[] array) {
+        return indexClosestToTarget < array.length - 1;
     }
 
     private static void addToMap(HashMap<Integer, List<int[]>> pairMap, int distance, int[] ints) {

@@ -98,4 +98,12 @@ class findclosestPair {
 
         assertEquals(Arrays.toString(new int[]{0,68}), Arrays.toString(result));
     }
+
+    @Test
+    void testFindClosestPair_fromFile() {
+        int[] array = ReadArrayFromFile.readFile();
+        int[] result = Main.findClosestPair(array, 50);
+
+        assertEquals(Arrays.toString(new int[]{1,49}), Arrays.toString(result));
+    }
 }
