@@ -15,16 +15,20 @@ public class PairFinder {
 
 
     public int[] findClosestPair() {
+        int[] result;
         long startTime = System.nanoTime();
         createPairs(target, array, pairMap);
 
         if (pairMap.isEmpty()) {
-
             return null;
         }
-
-        int shortestDistance = Collections.min(pairMap.keySet());
-        int[] result = findLargestDifference(pairMap, shortestDistance);
+        if (pairMap.size() == 1) {
+            result = pairMap.get(0).getFirst();
+        } else {
+            int shortestDistance = Collections.min(pairMap.keySet());
+//            result = findLargestDifference(pairMap, shortestDistance);
+            result = pairMap.get(shortestDistance).getFirst();
+        }
         long stopTime = System.nanoTime();
         System.out.println("Runtime: " + (float) (stopTime - startTime) / 1000000 + "ms");
 //        printResult(result);
@@ -59,7 +63,7 @@ public class PairFinder {
     }
 
     private void createPairs(int target, int[] array, HashMap<Integer, List<int[]>> pairMap) {
-        int indexClosestToTarget = findValueClosestToTarget(array, target, 0, array.length-1);
+        int indexClosestToTarget = findValueClosestToTarget(array, target, 0, array.length - 1);
         createPairsFromIndex(indexClosestToTarget, array, target, pairMap);
     }
 
@@ -73,15 +77,15 @@ public class PairFinder {
                 int distance = Math.abs(target - (array[i] + array[j]));
                 if (array[i] + array[j] == target) {
                     //System.out.println("Found pair with 0 distance");
-                    addToMap(pairMap, distance, new int[] {array[j], array[i]});
+                    addToMap(pairMap, distance, new int[]{array[j], array[i]});
                     return;
-                }  else {
-                    addToMap(pairMap, distance, new int[] {array[j], array[i]});
+                } else {
+                    addToMap(pairMap, distance, new int[]{array[j], array[i]});
                 }
 
             }
         }
-        addToMap(pairMap, Math.abs(target - (array[indexClosestToTarget] + array[0])), new int[] {array[indexClosestToTarget], array[0]});
+        addToMap(pairMap, Math.abs(target - (array[indexClosestToTarget] + array[0])), new int[]{array[indexClosestToTarget], array[0]});
 
     }
 
@@ -113,7 +117,7 @@ public class PairFinder {
 
 
         int diff1 = Math.abs(array[halfwayPoint] - target);
-        int diff2 = Math.abs(array[halfwayPoint+ 1] - target);
+        int diff2 = Math.abs(array[halfwayPoint + 1] - target);
         if (diff1 == diff2) {
             return halfwayPoint;
         }

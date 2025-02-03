@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Benchmark {
@@ -14,9 +15,10 @@ public class Benchmark {
     }
 
     public void runBenchmark() {
-        int[] array = UniqueRandomArray.fillUniqueRandomArray(100, size);
+        Random r = new Random();
         for (int i = 0; i < numOfRuns; i++) {
-            Random r = new Random();
+            int seed = r.nextInt(1000000);
+            int[] array = UniqueRandomArray.fillUniqueRandomArray(seed, size);
             long startTime, stopTime;
             int target = r.nextInt(25000);
             PairFinder finder = new PairFinder(array, target);
@@ -30,6 +32,6 @@ public class Benchmark {
 
     private void getAverageRuntime() {
         float averageRunTimeMili = (float) (runTimeNano / numOfRuns) / 1000000;
-        System.out.println("The average runtime from " + numOfRuns + " is: " + averageRunTimeMili + " ms");
+        System.out.println("The average runtime from " + numOfRuns + " runs is: " + averageRunTimeMili + "ms");
     }
 }
