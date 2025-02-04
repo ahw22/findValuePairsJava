@@ -16,22 +16,22 @@ public class Benchmark {
 
     public void runBenchmark() {
         Random r = new Random();
+        ArrayHandler handler = new ArrayHandler(size);
         for (int i = 0; i < numOfRuns; i++) {
-            int seed = r.nextInt(1000000);
-            int[] array = UniqueRandomArray.fillUniqueRandomArray(seed, size);
+            handler.shuffleArray();
             long startTime, stopTime;
             int target = r.nextInt(25000);
-            PairFinder finder = new PairFinder(array, target);
+            PairFinder finder = new PairFinder(handler.getArray(), target, size);
             startTime = System.nanoTime();
             finder.findClosestPair();
             stopTime = System.nanoTime();
             runTimeNano += stopTime - startTime;
         }
-        getAverageRuntime();
+        getAverageRuntime()h;
     }
 
     private void getAverageRuntime() {
-        float averageRunTimeMili = (float) (runTimeNano / numOfRuns) / 1000000;
+        float averageRunTimeMili = (float) (runTimeNano / numOfRuns) / 1_000_000;
         System.out.println("The average runtime from " + numOfRuns + " runs is: " + averageRunTimeMili + "ms");
     }
 }
