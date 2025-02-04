@@ -17,7 +17,8 @@ public class PairFinder {
 
     public int[] findClosestPair() {
         array = Arrays.stream(array).sorted().toArray();
-        return createPair();
+        int[] result = createPair();
+        return result;
     }
 
     private int[] createPair() {
@@ -33,7 +34,7 @@ public class PairFinder {
         }
     }
 
-    private void printResult(int[] result) {
+    public void printResult(int[] result) {
         if (result == null) {
             System.out.println("There is no pair!");
             System.out.println("-".repeat(80));

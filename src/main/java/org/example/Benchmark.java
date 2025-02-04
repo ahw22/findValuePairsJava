@@ -23,7 +23,7 @@ public class Benchmark {
             int target = r.nextInt(25000);
             PairFinder finder = new PairFinder(handler.getArray(), target, size);
             startTime = System.nanoTime();
-            finder.findClosestPair();
+            int[] result = finder.findClosestPair();
             stopTime = System.nanoTime();
             runTimeNano += stopTime - startTime;
         }

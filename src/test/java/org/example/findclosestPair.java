@@ -53,4 +53,11 @@ class findclosestPair {
         int[] result = finder.findClosestPair();
         assertEquals(Arrays.toString(new int[]{99998,arraySize-1}), Arrays.toString(result));
     }
+
+    @Test
+    void target166140() {
+        PairFinder finder = new PairFinder(handler.getArray(), 166_140, arraySize);
+        int[] result = finder.findClosestPair();
+        assertEquals(Arrays.toString(new int[]{66_141,arraySize-1}), Arrays.toString(result));
+    }
 }
