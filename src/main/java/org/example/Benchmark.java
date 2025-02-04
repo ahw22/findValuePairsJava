@@ -27,7 +27,7 @@ public class Benchmark {
             stopTime = System.nanoTime();
             runTimeNano += stopTime - startTime;
         }
-        getAverageRuntime()h;
+        getAverageRuntime();
     }
 
     private void getAverageRuntime() {
